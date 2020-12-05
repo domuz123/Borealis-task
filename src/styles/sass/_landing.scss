@@ -1,0 +1,48 @@
+@import './_variables.scss';
+.landing {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .car-type {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 159px);
+        margin: 2em 0;
+    }
+    .service-type {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 245px);
+        margin: 2em 0;
+    }
+    .voucher-field {
+        text-align: right;
+        &_total {
+            font-size: 1.5em;
+        }
+        &_succes-message {
+            color: $successColor
+        }
+    }
+    .fifth-step {
+         &_instructions {
+            font-size: 0.8em;
+         }
+         &_info {
+             display: flex;
+             align-items: center;
+             h3 {
+                text-transform: uppercase;
+                letter-spacing: 0.1em
+             }
+         }
+
+}
+    .step-title{
+        font-size: 1.5em;
+    }
+    .link-style {
+       color: $linkColor;
+       cursor: pointer;
+    }
+}
