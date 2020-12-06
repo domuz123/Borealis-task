@@ -11,6 +11,12 @@ import Spinner from '../../Components/Spinner/Spinner'
 import LastStepButton from '../../Components/Button/LastStepButton'
 import NextButton from '../../Components/Button/NextButton'
 import PrevButton from '../../Components/Button/PrevButton'
+import ToastContent from '../../Components/ToastContent/ToastWarning'
+import {
+	showInfoMessage,
+	showWarningMessage,
+	clearMessage,
+} from '../../utils/showMessage'
 
 const Landing = (props) => {
 	const [vouchers] = useState([
@@ -32,6 +38,7 @@ const Landing = (props) => {
 		voucherValue: '',
 		voucherDiscount: null,
 		valueWithoutVoucher: null,
+		selectedVoucher: {},
 	})
 	const [formValue, setFormValue] = useState({
 		name: '',
@@ -95,28 +102,41 @@ const Landing = (props) => {
 				}
 			}
 		}
-		const calcTotal = selectedCategories.reduce((a, b) => a + b.price, 0)
+
+		const total = selectedCategories.reduce((a, b) => a + b.price, 0)
+		let whenVoucherInserted = {}
+		if (services.voucherValid) {
+			whenVoucherInserted = calcDiscount(total, services.selectedVoucher)
+		}
 		setServices({
 			...services,
-			total: calcTotal,
+			total: services.voucherValid ? whenVoucherInserted.calcTotal : total,
 			selected: selectedCategories,
+			voucherMoneyDiscount: whenVoucherInserted.discount,
+			valueWithoutVoucher: whenVoucherInserted.withoutVoucher,
 		})
 	}
 
+	const calcDiscount = (total, voucher) => {
+		const discount = total * (+voucher.discount / 100)
+		const calcTotal = total - discount
+		const withoutVoucher = calcTotal + discount
+		return {
+			discount,
+			withoutVoucher,
+			calcTotal,
+		}
+	}
 	const showInfo = (detail) => {
-		toast.current.show({
-			severity: 'info',
-			summary: 'Obavijest',
-			detail,
-			life: 3000,
-		})
+		showInfoMessage(detail, toast, 'info')
 	}
 	const confirmVoucher = () => {
 		const v = vouchers.find((s) => s.name === services.voucherValue)
 		if (v) {
-			const discount = services.total * (+v.discount / 100)
-			const calcTotal = services.total - discount
-			const withoutVoucher = calcTotal + discount
+			const { discount, calcTotal, withoutVoucher } = calcDiscount(
+				services.total,
+				v
+			)
 			setServices({
 				...services,
 				total: calcTotal,
@@ -124,6 +144,7 @@ const Landing = (props) => {
 				voucherDiscount: +v.discount,
 				voucherMoneyDiscount: discount,
 				valueWithoutVoucher: withoutVoucher,
+				selectedVoucher: v,
 			})
 		} else showInfo('Neispravan kupon')
 	}
@@ -169,7 +190,7 @@ const Landing = (props) => {
 		setUpdateInfoState(false)
 		await setDialog(false)
 		setSteps(1)
-		toast.current.clear()
+		clearMessage(toast)
 		restartState()
 	}, [])
 
@@ -194,7 +215,10 @@ const Landing = (props) => {
 							<PrevButton onClick={previous} />
 							<NextButton onClick={next} disabled={!services.selected.length} />
 							{updateInfoState && (
-								<LastStepButton goToLastStep={goToLastStep} />
+								<LastStepButton
+									goToLastStep={goToLastStep}
+									disabled={!services.selected.length}
+								/>
 							)}
 						</div>
 					),
@@ -267,40 +291,13 @@ const Landing = (props) => {
 	const { content, footer } = renderDialogContent()
 	const showConfirm = useCallback(() => {
 		if (category) {
-			toast.current.show({
-				severity: 'warn',
-				sticky: true,
-				content: (
-					<div className='p-flex p-flex-column' style={{ flex: '1' }}>
-						<div className='p-text-center'>
-							<i
-								className='pi pi-exclamation-triangle'
-								style={{ fontSize: '3rem' }}
-							></i>
-							<h4>Jeste li sigurni?</h4>
-							<p>Ukoliko izgasite dialog svi podaci će biti izgubljeni</p>
-						</div>
-						<div className='p-grid p-fluid'>
-							<div className='p-col-6'>
-								<Button
-									type='button'
-									label='Da'
-									className='p-button-success'
-									onClick={closeDialog}
-								/>
-							</div>
-							<div className='p-col-6'>
-								<Button
-									type='button'
-									label='Ne'
-									className='p-button-secondary'
-									onClick={() => toast.current.clear()}
-								/>
-							</div>
-						</div>
-					</div>
-				),
-			})
+			showWarningMessage(
+				toast,
+				<ToastContent
+					closeDialog={closeDialog}
+					clearToast={() => clearMessage(toast)}
+				/>
+			)
 		} else closeDialog()
 	}, [category, closeDialog])
 

@@ -3,8 +3,6 @@ import Button from '../../Button/Button'
 import { format } from '../../../utils/format'
 
 const Form = (props) => {
-	console.log(props)
-
 	return (
 		<div className='p-col fifth-step'>
 			<div className='step-title'>Korak 5. Pregled potvrda i odabira</div>

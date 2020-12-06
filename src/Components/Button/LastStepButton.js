@@ -8,6 +8,7 @@ const LastStep = (props) => {
 			icon='pi pi-angle-double-right'
 			iconPos='right'
 			className='p-button-success'
+			disabled={props.disabled}
 		/>
 	)
 }

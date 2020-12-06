@@ -32,7 +32,7 @@ const Services = (props) => {
 			price: 229,
 		},
 	]
-	console.log(props, props.services.selected)
+
 	return (
 		<div className='p-col second-step'>
 			<div className='step-title'>

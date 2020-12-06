@@ -3,7 +3,6 @@ import Input from '../../Input/Input'
 import TextArea from '../../TextArea/TextArea'
 
 const Form = (props) => {
-	console.log(props)
 	const inputs = [
 		{ name: 'name', placeholder: 'Ime i prezime*', type: 'text' },
 		{ name: 'email', placeholder: 'Email adresa*', type: 'text' },
