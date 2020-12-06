@@ -9,6 +9,7 @@ const PrimeButton = (props) => {
 			onClick={props.onClick}
 			className={props.className}
 			iconPos={props.iconPos}
+			disabled={props.disabled}
 		/>
 	)
 }

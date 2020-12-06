@@ -37,8 +37,8 @@ const Form = (props) => {
 						/>
 					</div>
 					<div>
-						{props.services.selected.map((s) => (
-							<div className='p-mb-2 p-d-flex p-jc-between'>
+						{props.services.selected.map((s, i) => (
+							<div className='p-mb-2 p-d-flex p-jc-between' key={i}>
 								<span> {s.name} </span> <span></span>
 								{format(s.price) + ' KN'}
 							</div>

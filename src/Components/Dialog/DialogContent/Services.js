@@ -80,10 +80,14 @@ const Services = (props) => {
 										voucherValue: e.target.value,
 									})
 								}
-								onClick={props.confirmVoucher}
-								icon='pi pi-check'
-								className='p-button-success'
-								label='Primijeni'
+								confirmVoucher={props.confirmVoucher}
+								closeVoucher={(e) =>
+									props.setServices({
+										...props.services,
+										voucher: false,
+										voucherValue: '',
+									})
+								}
 							/>
 						) : (
 							<div>

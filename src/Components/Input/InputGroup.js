@@ -5,12 +5,24 @@ import Button from '../Button/Button'
 const InputGroup = (props) => {
 	return (
 		<div className='p-inputgroup'>
-			<Input value={props.value} onChange={props.onChange} />
+			<Input
+				value={props.value}
+				onChange={props.onChange}
+				placeholder={props.placeholder}
+			/>
+
 			<Button
-				label={props.label}
-				onClick={props.onClick}
-				icon={props.icon}
-				className={props.className}
+				onClick={props.confirmVoucher}
+				icon='pi pi-check'
+				className='p-button-success'
+				label='Primijeni'
+				placeholder='Unesite kupon'
+			/>
+			<Button
+				label={'Poništi'}
+				onClick={props.closeVoucher}
+				icon={'pi pi-times'}
+				className={'p-button-warning'}
 			/>
 		</div>
 	)

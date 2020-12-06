@@ -4,7 +4,7 @@ import Header from './Components/Header/Header'
 
 const App = () => {
 	return (
-		<div className='p-grid'>
+		<div className='main'>
 			<div className='p-col-12'>
 				<Header />
 			</div>

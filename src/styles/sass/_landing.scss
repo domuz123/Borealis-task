@@ -1,6 +1,6 @@
 @import './_variables.scss';
 .landing {
-    height: 100vh;
+    height: calc(100vh - 100px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,6 +37,9 @@
              }
          }
 
+}  
+.success-info {
+   text-align: center;
 }
     .step-title{
         font-size: 1.5em;

@@ -5,10 +5,11 @@ const Header = (props) => {
 		<div className='p-grid header'>
 			<div className='p-ml-5 p-d-flex'>
 				<div>
-					<img src={tokic} alt='logo' className='img-fluid' height='100px' />
+					<img src={tokic} alt='logo' className='img-fluid' height='90px' />
 				</div>
-				<div className=''>
-					<h4> Konfigurator servisa </h4> <h6>Izračunajte trošak seriva</h6>
+				<div className='header_text'>
+					<h2 className='p-mb-1'> Konfigurator servisa </h2>
+					<span>Izračunajte trošak seriva</span>
 				</div>
 			</div>
 		</div>
