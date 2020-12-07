@@ -1,0 +1,20 @@
+@media(max-width: 575px) {
+  .header {
+      &_text{ display: none;}
+    }
+   .p-inputgroup {
+       display: flex;
+       flex-direction: column;
+       .p-inputtext {
+        width: 100% !important;
+    }
+   }
+
+   .fifth-step
+      {  
+       &_value { margin-right: 0 !important} 
+       &_info {
+         justify-content: space-between !important;
+      } 
+}
+}

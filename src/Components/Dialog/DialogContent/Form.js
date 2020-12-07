@@ -6,7 +6,7 @@ const Form = (props) => {
 	const inputs = [
 		{ name: 'name', placeholder: 'Ime i prezime*', type: 'text' },
 		{ name: 'email', placeholder: 'Email adresa*', type: 'text' },
-		{ name: 'phone', placeholder: 'Broj telefona*', type: 'text' },
+		{ name: 'phone', placeholder: 'Broj telefona*', type: 'number' },
 	]
 
 	return (

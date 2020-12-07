@@ -88,6 +88,7 @@ const Landing = (props) => {
 		}
 	}
 	const onCategoryChange = (e) => {
+		// select categories and calc total
 		let selectedCategories = [...services.selected]
 
 		if (e.checked) {
@@ -105,6 +106,7 @@ const Landing = (props) => {
 
 		const total = selectedCategories.reduce((a, b) => a + b.price, 0)
 		let whenVoucherInserted = {}
+		// if user adds service after voucher is inserted than calculate again total and price without voucher
 		if (services.voucherValid) {
 			whenVoucherInserted = calcDiscount(total, services.selectedVoucher)
 		}
@@ -118,6 +120,7 @@ const Landing = (props) => {
 	}
 
 	const calcDiscount = (total, voucher) => {
+		// calc discount, total and price without voucher
 		const discount = total * (+voucher.discount / 100)
 		const calcTotal = total - discount
 		const withoutVoucher = calcTotal + discount
@@ -131,6 +134,7 @@ const Landing = (props) => {
 		showInfoMessage(detail, toast, 'info')
 	}
 	const confirmVoucher = () => {
+		// check if voucher is on the list of valid vouchers. If not, show the message.
 		const v = vouchers.find((s) => s.name === services.voucherValue)
 		if (v) {
 			const { discount, calcTotal, withoutVoucher } = calcDiscount(
@@ -157,14 +161,16 @@ const Landing = (props) => {
 		setFormValue(cloneForm)
 		setFormErros(cloneFormErros)
 	}
-
+	// eslint-disable-next-line no-useless-escape
 	const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 	const handleValidation = (validateData) => {
+		//choose attributes to validate because not all of them are required
+		const { name, email, phone } = formValue
 		let toValidate = {
-			name: formValue.name,
-			email: formValue.email,
-			phone: formValue.phone,
+			name,
+			email,
+			phone,
 		}
 		let errors = {}
 		let formIsValid = true
@@ -187,6 +193,7 @@ const Landing = (props) => {
 		setUpdateInfoState(true)
 	}
 	const closeDialog = useCallback(async () => {
+		//after dialog is closed restart everything
 		setUpdateInfoState(false)
 		await setDialog(false)
 		setSteps(1)
@@ -290,6 +297,7 @@ const Landing = (props) => {
 
 	const { content, footer } = renderDialogContent()
 	const showConfirm = useCallback(() => {
+		// show warning if user closes dialog. Only show it if there is something to save.
 		if (category) {
 			showWarningMessage(
 				toast,

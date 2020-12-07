@@ -7,28 +7,28 @@ const Services = (props) => {
 	const categories = [
 		{
 			name: 'Zamjena ulja i filtera (500kn)',
-			key: 'Zamjena ulja i filtera(500kn)',
+			key: 'Zamjena ulja i filtera',
 			price: 500,
 		},
 		{
 			name: 'Promjena pakni (450kn)',
-			key: 'Promjena pakni (450kn)',
+			key: 'Promjena pakni',
 			price: 450,
 		},
-		{ name: 'Promjena guma (100kn)', key: 'Promjena guma (100kn)', price: 100 },
+		{ name: 'Promjena guma (100kn)', key: 'Promjena guma', price: 100 },
 		{
 			name: 'Servis klima uređaja (299)',
-			key: 'Servis klima uređaja (299)',
+			key: 'Servis klima uređaja',
 			price: 299,
 		},
 		{
 			name: 'Balansiranje guma (50kn)',
-			key: 'Balansiranje guma (50kn)',
+			key: 'Balansiranje guma',
 			price: 50,
 		},
 		{
 			name: 'Zamjena ulja na kočnicama (229)',
-			key: 'Zamjena ulja na kočnicama (229)',
+			key: 'Zamjena ulja na kočnicama',
 			price: 229,
 		},
 	]
@@ -59,15 +59,18 @@ const Services = (props) => {
 			</div>
 			<div className='voucher-field'>
 				{!props.services.voucher ? (
-					<div
-						onClick={() =>
-							props.setServices({
-								...props.services,
-								voucher: true,
-							})
-						}
-					>
-						<span className='link-style'> Imam kupon </span>
+					<div>
+						<span
+							onClick={() =>
+								props.setServices({
+									...props.services,
+									voucher: true,
+								})
+							}
+							className='link-style'
+						>
+							Imam kupon
+						</span>
 					</div>
 				) : (
 					<>
@@ -88,6 +91,7 @@ const Services = (props) => {
 										voucherValue: '',
 									})
 								}
+								placeholder='Unesite kupon'
 							/>
 						) : (
 							<div>
