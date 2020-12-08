@@ -28,3 +28,17 @@ export const format = (amount, dc, d, t) => {
 		console.log(e)
 	}
 }
+
+export function formatPhoneNumb(phone) {
+	let cleaned = ('' + phone).replace(/\D/g, '')
+	let expr =
+		cleaned.length === 10
+			? /^(1|)?(\d{3})(\d{3})(\d{4})$/
+			: /^(1|)?(\d{3})(\d{3})(\d{3})$/
+	let match = cleaned.match(expr)
+
+	if (match) {
+		let intlCode = match[1] ? '+1 ' : ''
+		return [intlCode, '', match[2], ' ', match[3], ' ', match[4]].join('')
+	} else return cleaned
+}

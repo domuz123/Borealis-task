@@ -8,6 +8,7 @@ const NextButton = (props) => {
 			icon='pi pi-arrow-right'
 			iconPos='right'
 			disabled={props.disabled}
+			className={props.className}
 		/>
 	)
 }

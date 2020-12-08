@@ -18,7 +18,7 @@ import {
 	clearMessage,
 } from '../../utils/showMessage'
 
-const Landing = (props) => {
+const Landing = () => {
 	const [vouchers] = useState([
 		{
 			name: 'Tokić123',
@@ -28,7 +28,7 @@ const Landing = (props) => {
 	const toast = useRef()
 	const [spinner, setSpinner] = useState(false)
 	const [dialog, setDialog] = useState(false)
-	const [steps, setSteps] = useState(1)
+	const [steps, setSteps] = useState(0)
 	const [category, setCategory] = useState('')
 	const [services, setServices] = useState({
 		selected: [],
@@ -196,106 +196,90 @@ const Landing = (props) => {
 		//after dialog is closed restart everything
 		setUpdateInfoState(false)
 		await setDialog(false)
-		setSteps(1)
+		setSteps(0)
 		clearMessage(toast)
 		restartState()
 	}, [])
 
 	const goToLastStep = () => {
-		if (handleValidation()) setSteps(4)
+		if (handleValidation()) setSteps(stepper.length - 2)
 	}
 
-	const renderDialogContent = () => {
-		switch (steps) {
-			case 2:
-				return {
-					content: (
-						<Services
-							onChange={(e) => onCategoryChange(e)}
-							services={services}
-							setServices={setServices}
-							confirmVoucher={confirmVoucher}
+	const stepper = [
+		{
+			content: (
+				<TypeOfCar onChange={(e) => setCategory(e.value)} category={category} />
+			),
+			footer: (
+				<div>
+					<NextButton onClick={next} disabled={!category} />
+					{updateInfoState && <LastStepButton goToLastStep={goToLastStep} />}
+				</div>
+			),
+		},
+		{
+			content: (
+				<Services
+					onChange={(e) => onCategoryChange(e)}
+					services={services}
+					setServices={setServices}
+					confirmVoucher={confirmVoucher}
+				/>
+			),
+			footer: (
+				<div>
+					<PrevButton onClick={previous} />
+					<NextButton onClick={next} disabled={!services.selected.length} />
+					{updateInfoState && (
+						<LastStepButton
+							goToLastStep={goToLastStep}
+							disabled={!services.selected.length}
 						/>
-					),
-					footer: (
-						<div>
-							<PrevButton onClick={previous} />
-							<NextButton onClick={next} disabled={!services.selected.length} />
-							{updateInfoState && (
-								<LastStepButton
-									goToLastStep={goToLastStep}
-									disabled={!services.selected.length}
-								/>
-							)}
-						</div>
-					),
-				}
-			case 3:
-				return {
-					content: (
-						<Form
-							formErros={formErros}
-							handleValidation={handleValidation}
-							handleInputChange={handleInputChange}
-							formValue={formValue}
-						/>
-					),
-					footer: (
-						<div>
-							<PrevButton onClick={previous} />
-							<NextButton onClick={validateForm} />
-							{updateInfoState && (
-								<LastStepButton goToLastStep={goToLastStep} />
-							)}
-						</div>
-					),
-				}
-			case 4:
-				return {
-					content: (
-						<FinalCheck
-							services={services}
-							formValue={formValue}
-							category={category}
-							updateInfo={updateInfo}
-						/>
-					),
-					footer: (
-						<div>
-							<PrevButton onClick={previous} />
-							<Button
-								onClick={sendRequest}
-								label='Pošalji'
-								icon='pi pi-check'
-								iconPos='right'
-							/>
-						</div>
-					),
-				}
+					)}
+				</div>
+			),
+		},
+		{
+			content: (
+				<Form
+					formErros={formErros}
+					handleValidation={handleValidation}
+					handleInputChange={handleInputChange}
+					formValue={formValue}
+				/>
+			),
+			footer: (
+				<div>
+					<PrevButton onClick={previous} />
+					<NextButton onClick={validateForm} />
+					{updateInfoState && <LastStepButton goToLastStep={goToLastStep} />}
+				</div>
+			),
+		},
+		{
+			content: (
+				<FinalCheck
+					services={services}
+					formValue={formValue}
+					category={category}
+					updateInfo={updateInfo}
+				/>
+			),
+			footer: (
+				<div>
+					<PrevButton onClick={previous} />
+					<Button
+						onClick={sendRequest}
+						label='Pošalji'
+						icon='pi pi-check'
+						iconPos='right'
+					/>
+				</div>
+			),
+		},
+		{ content: <Success closeDialog={closeDialog} /> },
+	]
 
-			case 5:
-				return { content: <Success closeDialog={closeDialog} /> }
-			default:
-				return {
-					content: (
-						<TypeOfCar
-							onChange={(e) => setCategory(e.value)}
-							category={category}
-						/>
-					),
-					footer: (
-						<div>
-							<NextButton onClick={next} disabled={!category} />
-							{updateInfoState && (
-								<LastStepButton goToLastStep={goToLastStep} />
-							)}
-						</div>
-					),
-				}
-		}
-	}
-
-	const { content, footer } = renderDialogContent()
 	const showConfirm = useCallback(() => {
 		// show warning if user closes dialog. Only show it if there is something to save.
 		if (category) {
@@ -313,13 +297,13 @@ const Landing = (props) => {
 		<div className='landing'>
 			<Toast reference={toast} />
 			<Dialog
-				footer={footer}
+				footer={stepper[steps].footer}
 				visible={dialog}
-				onHide={steps !== 5 ? showConfirm : closeDialog}
+				onHide={steps === stepper.length - 1 ? closeDialog : showConfirm}
 				header='Konfigurator servisa'
 			>
 				{!spinner ? (
-					content
+					stepper[steps].content
 				) : (
 					<div className='p-text-center'>
 						<Spinner />

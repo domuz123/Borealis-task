@@ -11,10 +11,59 @@ const Form = (props) => {
 	))
 	const voucher = props.services.voucher && (
 		<div className='p-mb-2 p-d-flex p-jc-end'>
-			<span> Popust({props.services.voucherDiscount + '%'}):</span>{' '}
+			<span> Popust ({props.services.voucherDiscount + '%'}): </span>{' '}
 			{'-' + format(props.services.voucherMoneyDiscount) + ' KN'}
 		</div>
 	)
+	// final check order needs to follow the order of the steps
+	const arrayOfContent = [
+		{
+			title: 'Model vozila',
+			content: <div> {props.category.name}</div>,
+			className: 'fifth-step_section p-col-12 p-sm-6',
+		},
+		{
+			title: 'Odabrane usluge',
+			content: (
+				<div>
+					{selected}
+					{voucher}
+					<div className='p-mb-2 p-d-flex p-jc-end'>
+						<span>Ukupno: </span>
+						<span className='p-ml-1'>
+							{' '}
+							<strong> {format(props.services.total) + ' KN'}</strong>
+						</span>
+					</div>
+				</div>
+			),
+			className: 'p-col-12 p-sm-6',
+		},
+		{
+			title: 'Kontakt podaci',
+			content: (
+				<div className='p-grid'>
+					<div className='p-col-12 p-sm-6 p-d-flex p-jc-between'>
+						<span> Ime i prezime: </span>
+						<span className='fifth-step_value'> {props.formValue.name}</span>
+					</div>
+					<div className='p-col-12 p-sm-6  p-d-flex p-jc-between'>
+						<span> Email adresa:</span>
+						<span> {props.formValue.email} </span>
+					</div>
+					<div className='p-col-12 p-sm-6 p-d-flex p-jc-between'>
+						<span>Broj telefona:</span>{' '}
+						<span className='fifth-step_value'> {props.formValue.phone}</span>
+					</div>
+					<div className='p-col-12 p-sm-6 p-d-flex p-jc-between'>
+						<span> Napomena: </span>{' '}
+						<span>{props.formValue.description || '-'} </span>
+					</div>
+				</div>
+			),
+			className: 'p-col-12',
+		},
+	]
 
 	return (
 		<div className='p-col fifth-step'>
@@ -27,54 +76,17 @@ const Form = (props) => {
 				upita za servis
 			</div>
 			<div className='p-grid p-mt-4'>
-				<div className='fifth-step_section p-col-12 p-sm-6'>
-					<div className='fifth-step_info'>
-						<h2>Model vozila</h2>{' '}
-						<UpdateButton onClick={() => props.updateInfo(1)} />
-					</div>
-					<div>{props.category.name}</div>
-				</div>
-				<div className='p-col-12 p-sm-6'>
-					<div className='fifth-step_info'>
-						<h2>Odabrane usluge</h2>{' '}
-						<UpdateButton onClick={() => props.updateInfo(2)} />
-					</div>
-					<div>
-						{selected}
-						{voucher}
-						<div className='p-mb-2 p-d-flex p-jc-end'>
-							<span>Ukupno: </span>
-							<span className='p-ml-1'>
-								{' '}
-								<strong> {format(props.services.total) + ' KN'}</strong>
-							</span>
+				{arrayOfContent.map((s, i) => {
+					return (
+						<div className={s.className} key={i}>
+							<div className='fifth-step_info'>
+								<h2>{s.title}</h2>{' '}
+								<UpdateButton onClick={() => props.updateInfo(i)} />
+							</div>
+							<div>{s.content}</div>
 						</div>
-					</div>
-				</div>
-				<div className='p-col-12'>
-					<div className='fifth-step_info '>
-						<h2>Kontakt podaci</h2>{' '}
-						<UpdateButton onClick={() => props.updateInfo(3)} />
-					</div>
-					<div className='p-grid'>
-						<div className='p-col-12 p-sm-6 p-d-flex p-jc-between'>
-							<span> Ime i prezime: </span>
-							<span className='fifth-step_value'> {props.formValue.name}</span>
-						</div>
-						<div className='p-col-12 p-sm-6  p-d-flex p-jc-between'>
-							<span> Email adresa:</span>
-							<span> {props.formValue.email} </span>
-						</div>
-						<div className='p-col-12 p-sm-6 p-d-flex p-jc-between'>
-							<span>Broj telefona:</span>{' '}
-							<span className='fifth-step_value'> {props.formValue.phone}</span>
-						</div>
-						<div className='p-col-12 p-sm-6 p-d-flex p-jc-between'>
-							<span> Napomena: </span>
-							<span>{props.formValue.description || '-'} </span>
-						</div>
-					</div>
-				</div>
+					)
+				})}
 			</div>
 		</div>
 	)

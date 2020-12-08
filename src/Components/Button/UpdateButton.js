@@ -5,7 +5,7 @@ const UpdateButton = (props) => {
 		<Button
 			label='Uredi'
 			onClick={props.onClick}
-			className='p-ml-2 p-button-sm'
+			className='p-ml-3 p-button-sm'
 			icon='pi pi-pencil'
 		/>
 	)
