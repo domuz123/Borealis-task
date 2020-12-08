@@ -10,8 +10,8 @@ const SuccessInfo = (props) => {
 				</div>
 				<div>
 					<span className='p-text-center p-mt-2'>
-						Vaša prijava uspješno poslana i zaprimljena. Kontaktirat ćemo vas u
-						najkraćem mogućem roku. Hvala vam
+						Vaša prijava uspješno je poslana i zaprimljena. Kontaktirat ćemo vas
+						u najkraćem mogućem roku. Hvala vam.
 					</span>
 				</div>
 				<div className='p-mt-5'>

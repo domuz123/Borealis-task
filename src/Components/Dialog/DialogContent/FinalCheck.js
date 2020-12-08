@@ -1,6 +1,6 @@
 import React from 'react'
 import { format } from '../../../utils/format'
-import UpdateButton from '../../Button/UpdateButton'
+import UpdateButton from '../../Button/ReusedButtons/UpdateButton'
 
 const Form = (props) => {
 	const selected = props.services.selected.map((s, i) => (

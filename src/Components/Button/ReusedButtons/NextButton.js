@@ -1,5 +1,6 @@
 import React from 'react'
-import Button from './Button'
+import Button from '../Button'
+import classNames from 'classnames'
 const NextButton = (props) => {
 	return (
 		<Button
@@ -8,7 +9,7 @@ const NextButton = (props) => {
 			icon='pi pi-arrow-right'
 			iconPos='right'
 			disabled={props.disabled}
-			className={props.className}
+			className={classNames(props.className)}
 		/>
 	)
 }

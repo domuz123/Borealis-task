@@ -15,7 +15,7 @@ const Header = () => {
 				</div>
 				<div className='header_text'>
 					<h2 className='p-mb-1'> Konfigurator servisa </h2>
-					<span>Izračunajte trošak seriva</span>
+					<span>Izračunajte trošak servisa</span>
 				</div>
 			</div>
 		</div>

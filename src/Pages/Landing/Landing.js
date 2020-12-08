@@ -8,9 +8,9 @@ import Toast from '../../Components/Toast/Toast'
 import FinalCheck from '../../Components/Dialog/DialogContent/FinalCheck'
 import Success from '../../Components/Dialog/DialogContent/SuccessInfo'
 import Spinner from '../../Components/Spinner/Spinner'
-import LastStepButton from '../../Components/Button/LastStepButton'
-import NextButton from '../../Components/Button/NextButton'
-import PrevButton from '../../Components/Button/PrevButton'
+import LastStepButton from '../../Components/Button/ReusedButtons/LastStepButton'
+import NextButton from '../../Components/Button/ReusedButtons/NextButton'
+import PrevButton from '../../Components/Button/ReusedButtons/PrevButton'
 import ToastContent from '../../Components/ToastContent/ToastWarning'
 import {
 	showInfoMessage,
@@ -68,13 +68,7 @@ const Landing = () => {
 		setFormErros({})
 		setCategory('')
 	}
-	const previous = () => {
-		setSteps((s) => s - 1)
-	}
 
-	const next = () => {
-		setSteps((s) => s + 1)
-	}
 	const sendRequest = () => {
 		setSpinner(true)
 		setTimeout(() => {
@@ -212,7 +206,10 @@ const Landing = () => {
 			),
 			footer: (
 				<div>
-					<NextButton onClick={next} disabled={!category} />
+					<NextButton
+						onClick={() => setSteps((s) => s + 1)}
+						disabled={!category}
+					/>
 					{updateInfoState && <LastStepButton goToLastStep={goToLastStep} />}
 				</div>
 			),
@@ -228,8 +225,11 @@ const Landing = () => {
 			),
 			footer: (
 				<div>
-					<PrevButton onClick={previous} />
-					<NextButton onClick={next} disabled={!services.selected.length} />
+					<PrevButton onClick={() => setSteps((s) => s - 1)} />
+					<NextButton
+						onClick={() => setSteps((s) => s + 1)}
+						disabled={!services.selected.length}
+					/>
 					{updateInfoState && (
 						<LastStepButton
 							goToLastStep={goToLastStep}
@@ -250,7 +250,7 @@ const Landing = () => {
 			),
 			footer: (
 				<div>
-					<PrevButton onClick={previous} />
+					<PrevButton onClick={() => setSteps((s) => s - 1)} />
 					<NextButton onClick={validateForm} />
 					{updateInfoState && <LastStepButton goToLastStep={goToLastStep} />}
 				</div>
@@ -267,7 +267,7 @@ const Landing = () => {
 			),
 			footer: (
 				<div>
-					<PrevButton onClick={previous} />
+					<PrevButton onClick={() => setSteps((s) => s - 1)} />
 					<Button
 						onClick={sendRequest}
 						label='Pošalji'

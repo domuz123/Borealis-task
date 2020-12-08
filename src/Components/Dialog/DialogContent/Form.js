@@ -38,7 +38,7 @@ const Form = (props) => {
 						onChange={(e) => props.handleInputChange(e.target.value, 'phone')}
 						placeholder='Broj telefona*'
 						className={props.formErros['phone'] && 'p-invalid'}
-						tooltip='Morate unijeti minimalno 9 zanmenki'
+						tooltip='Morate unijeti minimalno 9 znamenki'
 					></InputMask>
 					{props.formErros['phone'] && (
 						<small className='p-invalid'>{props.formErros['phone']}</small>
@@ -50,7 +50,7 @@ const Form = (props) => {
 						onChange={(e) =>
 							props.handleInputChange(e.target.value, 'description')
 						}
-						placeholder='Napomena'
+						placeholder='Napomena (opcionalno)'
 					/>
 				</div>
 			</div>

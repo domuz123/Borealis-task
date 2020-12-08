@@ -1,5 +1,6 @@
 import React from 'react'
-import Button from './Button'
+import Button from '../Button'
+import classNames from 'classnames'
 const LastStep = (props) => {
 	return (
 		<Button
@@ -7,7 +8,7 @@ const LastStep = (props) => {
 			onClick={props.goToLastStep}
 			icon='pi pi-angle-double-right'
 			iconPos='right'
-			className='p-button-success'
+			className={classNames(props.className, 'p-button-success')}
 			disabled={props.disabled}
 		/>
 	)

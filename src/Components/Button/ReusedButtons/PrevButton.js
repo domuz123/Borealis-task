@@ -1,5 +1,6 @@
 import React from 'react'
-import Button from './Button'
+import Button from '../Button'
+import classNames from 'classnames'
 const PrevButton = (props) => {
 	return (
 		<Button
@@ -7,6 +8,7 @@ const PrevButton = (props) => {
 			label={'Natrag'}
 			icon='pi pi-arrow-left'
 			iconPos='left'
+			className={classNames(props.className)}
 		/>
 	)
 }
